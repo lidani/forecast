@@ -1,0 +1,9 @@
+label#label {
+	font-size: 20px;
+	color: black;
+}
+
+input#city, input#country {
+	font-size: 20px;
+	color: black;
+}

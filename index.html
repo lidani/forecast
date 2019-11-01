@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Previsão do Tempo</title>
+	<meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" href="materialize/css/materialize.min.css">
+	<link rel="stylesheet" type="text/css" href="css/css.css">
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<link rel="shortcut icon" href="img/favicon.ico">
+</head>
+<body class="blue-grey lighten-3">
+	<nav>
+		<div class="nav-wrapper blue-grey darken-2">
+	    	<a href="index.html" class="brand-logo">&nbsp;
+	    		<img src="img/logo_OpenWeatherMap_orange.svg" style="height: 35px; margin: 10px auto;" />
+	    	</a>
+	    	<ul id="nav-mobile" class="right hide-on-med-and-down">
+	        	<li><a href="https://openweathermap.org/">Site Oficial</a></li>
+			</ul>
+		</div>
+	</nav>
+	
+	<div class="blue-grey" style="height: 5px; margin: 2px;"></div>
+	<br>
+
+	<div class="container" id="App">
+		<div class="card">
+			<div class="card-panel">
+				<div class="row">
+					<form v-on:submit="loadWeather($event)" class="col s12">
+				    	<div class="row">
+				        	<div class="input-field col s6">
+					        	<input id="city" type="text" class="validate" v-model="city" required>
+				         		<label id="label" for="city">City</label>
+				        	</div>
+				        	<div class="input-field col s6">
+					        	<input id="country" type="text" class="validate" v-model="country">
+				        		<label id="label" for="country">Country</label>
+				        	</div>
+					        <div class="input-field col s12 center">
+					        	<input type="submit" class="btn	blue-grey darken-2" value="Search">
+					        </div>
+				      	</div>
+				    </form>
+				</div>
+			</div>
+		</div>
+
+		<div v-if="weather !== null">
+		<br><hr><br>
+			<div class="card">
+				<div class="card-panel center">
+					<h3>Condições Atuais de {{weather.name}}, {{weather.sys.country}} <img v-bind:src="IconAtual" class="btn-floating btn-large waves-effect waves-light blue-grey darken-2"></h3><hr><br>
+
+					<weather v-bind:weather="weather"> </weather>
+				</div>
+			</div>
+			<div class="center">
+				<input type="button" class="center btn blue-grey darken-2" value="Forecast" v-on:click="loadWeatherForecast($event)">
+			</div>
+			<br><hr><br>
+		</div>
+
+		<div v-if="forecast !== null">	
+			<h4 class="center">Previsão para os próximos 5 dias de {{weather.name}} {{weather.sys.country}}</h4>
+
+			<ul class="collapsible popout" data-collapsible="expandable">
+		    	<li>
+		    		<div class="collapsible-header blue-grey darken-2"><i class="material-icons">filter_drama</i>Hoje</div>
+		    		<div class="collapsible-body">
+		    			<span>
+		    				<forecast v-bind:forecast="forecast[0]"></forecast> 
+		    			</span>
+		    		</div>
+		    	</li>
+		    	<li>
+				    <div class="collapsible-header blue-grey darken-2"><i class="material-icons">filter_drama</i>Amanhã</div>
+				    <div class="collapsible-body">
+				    	<span>
+				    		<forecast v-bind:forecast="forecast[1]"></forecast>
+				    	</span>
+				    </div>
+		    	</li>
+		    	<li>
+				    <div class="collapsible-header blue-grey darken-2"><i class="material-icons">filter_drama</i>Daqui 3 dias</div>
+				    <div class="collapsible-body">
+				    	<span>
+				    		<forecast v-bind:forecast="forecast[2]"></forecast>
+				    	</span>
+				    </div>
+		    	</li>
+		    	<li>
+				    <div class="collapsible-header blue-grey darken-2"><i class="material-icons">filter_drama</i>Daqui 4 dias</div>
+				    <div class="collapsible-body">
+				    	<span>
+				    		<forecast v-bind:forecast="forecast[3]"></forecast>
+				    	</span>
+				    </div>
+		    	</li>
+		    	<li>
+				    <div class="collapsible-header blue-grey darken-2"><i class="material-icons">filter_drama</i>Daqui 5 dias</div>
+				    <div class="collapsible-body">
+				    	<span>
+				    		<forecast v-bind:forecast="forecast[4]"></forecast>
+				    	</span>
+				    </div>
+		    	</li>
+		  	</ul>
+		</div>
+	</div>
+		
+	<footer class="page-footer blue-grey darken-2">
+    	<div class="container">
+    		<div class="row">
+    			<div class="col l6 s12">
+    				<h5 class="white-text">Open Weather Map</h5>
+          		</div>
+          		<div class="col l4 offset-l2 s12">
+            		<h5 class="white-text">Social</h5>
+            		<ul>
+              			<li><a class="grey-text text-lighten-3" target="_blank" href="https://www.facebook.com/GustaSangaletti">Facebook</a></li>
+                  		<li><a class="grey-text text-lighten-3" target="_blank" href="https://www.twitter.com/kkeaelidani">Twitter</a></li>
+                  		<li><a class="grey-text text-lighten-3" target="_blank" href="https://steamcommunity.com/id/Jubirusco/">Steam</a></li>
+            		</ul>
+          		</div>
+        	</div>
+      	</div>
+    	<div class="footer-copyright">
+        	<div class="container">
+        		© 2017 Gustavo Lidani
+        		<a class="grey-text text-lighten-4 right" href="https://openweathermap.org/" target="_blank">Official Open Weather Map site</a>
+        	</div>
+      	</div>
+	</footer>
+
+<script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="materialize/js/materialize.min.js"></script>
+<script type="text/javascript" src="js/vue.js"></script>
+
+<script type="text/javascript" src="js/javascript.js"></script>
+</body>
+</html>
